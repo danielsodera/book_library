@@ -16,21 +16,7 @@
 
 # Book added successfully!
 
-#current progress 
-#day 1 
-#added a Library class, initalized a library array to hold all book data 
-#defined a readCsv method that succesfully adds the CSV content to an object (array of hashes) 
-#defined a start_program method to add the first inital steps of the program 
-#defined method view_books, which allows you too see books 
-#issue, books are currently displayed through book[0] which is the first column. We want to be able to access each individual book by name if needed.
 
-#day 2
-#changed readCSV to use a foreach that adds the headers as first row symbols 
-#program now writes back (saves) a new csv file to local directory with #save_csv method
-#asks user to write a name for the new csv file before saving 
-#adds safety for if user writes an option outside of (1-6)
-#nextsteps: Before this gets too big, move it to visual studio to commit properly and add testing for each method 
-#tests for: read_csv, start_program, view_books, save_csv
 
 
 require 'csv'
@@ -86,8 +72,6 @@ class Library
 			puts "Unable to save file, error: #{e}"
 		end
 	end
-
-	
 
 end
 
