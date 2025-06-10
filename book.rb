@@ -16,9 +16,6 @@
 
 # Book added successfully!
 
-
-
-
 require 'csv'
 
 class Library 
@@ -37,7 +34,7 @@ class Library
 
 	def start_program
 		puts "Welcome to your Book Tracker 📖"
-		puts "\n1. View all books \n2. Add a new book \n3. Filter by status \n4. Update a book \n5. Delete a book \n6. Exit"
+		puts "\n1. View all books \n2. Add a new book \n3. Show all unread books \n4. Update a book \n5. Delete a book \n6. Exit"
 		@options = ["1", "2", "3", "4", "5", "6"]
 
 		puts "\nChoose an option (1-6): "
@@ -47,12 +44,37 @@ class Library
 			puts "please choose a number, 1-6 from the list of options stated above:"
 			@choice = gets.chomp
 		end
-		@choice
+
+		case @choice
+		when "1"
+			self.view_books
+		when "2"
+			#add new book 
+		when "3"
+			self.show_unread
+		when "4"
+			#update a book 
+		when "5"
+			#delete a book 
+		when "6"
+			puts "Happy reading, bye!"
+			exit(0)
+		end
+
+
 	end
 
 	def view_books 
 		library.each do |book|
 			puts "\n#{book[:title]} by #{book[:author]} \nrating: #{book[:rating]} - #{book[:status]}"
+		end
+	end
+
+	def show_unread
+		library.each do |book|
+			if book[:status] == "unread"
+				puts "\n#{book[:title]} by #{book[:author]} \nrating: #{book[:rating]} - #{book[:status]}"
+			end 
 		end
 	end
 
@@ -74,6 +96,12 @@ class Library
 	end
 
 end
+
+
+
+
+
+
 
 test = Library.new("library.csv")
 test.start_program
