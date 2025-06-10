@@ -35,6 +35,11 @@ class Library
 	def start_program
 		puts "Welcome to your Book Tracker 📖"
 		puts "\n1. View all books \n2. Add a new book \n3. Show all unread books \n4. Update a book \n5. Delete a book \n6. Export libary to csv"
+		get_option
+		choice(@choice)
+	end
+
+	def get_option
 		@options = ["1", "2", "3", "4", "5", "6"]
 
 		puts "\nChoose an option (1-6): "
@@ -44,8 +49,10 @@ class Library
 			puts "please choose a number, 1-6 from the list of options stated above:"
 			@choice = gets.chomp
 		end
+	end
 
-		case @choice
+	def choice(input)
+		case input
 		when "1"
 			self.view_books
 		when "2"
@@ -59,8 +66,6 @@ class Library
 		when "6"
 			self.save_csv
 		end
-
-
 	end
 
 	def view_books 
