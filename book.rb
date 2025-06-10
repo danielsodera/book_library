@@ -34,7 +34,7 @@ class Library
 
 	def start_program
 		puts "Welcome to your Book Tracker 📖"
-		puts "\n1. View all books \n2. Add a new book \n3. Show all unread books \n4. Update a book \n5. Delete a book \n6. Exit"
+		puts "\n1. View all books \n2. Add a new book \n3. Show all unread books \n4. Update a book \n5. Delete a book \n6. Export libary to csv"
 		@options = ["1", "2", "3", "4", "5", "6"]
 
 		puts "\nChoose an option (1-6): "
@@ -57,8 +57,7 @@ class Library
 		when "5"
 			#delete a book 
 		when "6"
-			puts "Happy reading, bye!"
-			exit(0)
+			self.save_csv
 		end
 
 
@@ -96,6 +95,8 @@ class Library
 	end
 
 end
+
+
 
 
 
