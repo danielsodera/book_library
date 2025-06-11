@@ -2,11 +2,12 @@
 # Welcome to your Book Tracker 📖
 
 # 1. View all books
-# 2. Add a new book
-# 3. Filter by status
-# 4. Update a book
-# 5. Delete a book
-# 6. Exit
+# 2. Filter by status
+# 3. Find a book
+# 4. Add a new book
+# 5. Update a book
+# 6. Delete a book
+# 7. Exit
 
 # Choose an option: 2
 
@@ -28,27 +29,27 @@ class Library
 
 	def read_csv(file)
 		CSV.foreach(file, headers: true, header_converters: :symbol) do |row|
-			library << row
+			library << row.to_h
 		end
 	end
 
 	def start_program
 		puts "Welcome to your Book Tracker 📖"
-		puts "\n1. View all books \n2. Add a new book \n3. Show all unread books \n4. Update a book \n5. Delete a book \n6. Export libary to csv"
-		get_option
-		choice(@choice)
+		puts "\n1. View all books \n2. Filter by unread \n3. Find a book \n4. Add a new book \n5. Update a book \n6. Delete a book \n7. Export libary to csv"
+		choice(get_option)
 	end
 
 	def get_option
-		@options = ["1", "2", "3", "4", "5", "6"]
+		options = ["1", "2", "3", "4", "5", "6", "7"]
 
-		puts "\nChoose an option (1-6): "
-		@choice = gets.chomp
+		puts "\nChoose an option (1-7): "
+		choice = gets.chomp
 
-		until @options.any?(@choice) 
-			puts "please choose a number, 1-6 from the list of options stated above:"
-			@choice = gets.chomp
+		until options.any?(choice) 
+			puts "please choose a number, 1-7 from the list of options stated above:"
+			choice = gets.chomp
 		end
+		choice
 	end
 
 	def choice(input)
@@ -56,29 +57,43 @@ class Library
 		when "1"
 			self.view_books
 		when "2"
-			#add new book 
-		when "3"
 			self.show_unread
+		when "3"
+			self.find_book
 		when "4"
-			#update a book 
+			#add new book 
 		when "5"
-			#delete a book 
+			#update a book
 		when "6"
+			#delete a book
+		when "7"
 			self.save_csv
 		end
 	end
 
 	def view_books 
 		library.each do |book|
-			puts "\n#{book[:title]} by #{book[:author]} \nrating: #{book[:rating]} - #{book[:status]}"
+			display_book(book)
 		end
 	end
 
 	def show_unread
 		library.each do |book|
 			if book[:status] == "unread"
-				puts "\n#{book[:title]} by #{book[:author]} \nrating: #{book[:rating]} - #{book[:status]}"
+				display_book(book)
 			end 
+		end
+	end
+
+	def find_book 
+		puts "Enter book title..."
+		input = gets.chomp.downcase
+		book = library.find { |book| book[:title].downcase == input }
+
+		if book 
+			display_book(book)
+		else 
+			puts "Book not found"
 		end
 	end
 
@@ -99,9 +114,13 @@ class Library
 		end
 	end
 
+	def display_book(book)
+		puts "\n#{book[:title]} by #{book[:author]} \nrating: #{book[:rating]} - #{book[:status]}"
+	end
+
 end
 
-
+#next step: Create a Book Class, with CRUD - Create, Read, Update, Delete entries 
 
 
 
