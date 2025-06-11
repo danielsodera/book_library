@@ -106,6 +106,7 @@ class Library
 	def add_new_book
 		print "Enter title: "
 		title = gets.chomp
+
 		print "Enter author: "
 		author = gets.chomp
 
@@ -119,8 +120,13 @@ class Library
 			rating = "n/a"
 		end
 
-		new_book = Book.new(title, author, status, rating)
-		library << new_book.add_new_book
+		begin
+			new_book = Book.new(title, author, status, rating)
+			library << new_book.add_new_book
+			puts "Added book!"
+		rescue Exception => e
+			puts "Unable to add book to library, error: #{e}"
+		end
 	end
 
 	def save_csv
