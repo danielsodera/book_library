@@ -25,7 +25,6 @@ class Library
 	def initialize(file)
 		@library = []
 		read_csv(file)
-		puts @library
 	end
 
 	def read_csv(file)
@@ -37,22 +36,26 @@ class Library
 	def start_program
 		puts "Welcome to your Book Tracker 📖"
 
-
-		puts "\n1. View all books \n2. Filter by unread \n3. Find a book \n4. Add a new book \n5. Update a book \n6. Delete a book \n7. Export libary to csv \n8. Exit program"
-		choice(get_option)
+		loop do 
+			puts "\n1. View all books \n2. Filter by unread \n3. Find a book \n4. Add a new book \n5. Update a book \n6. Delete a book \n7. Export libary to csv \n8. Exit program"
+			menu_choice = get_option
+		break if menu_choice == "8"	
+			choice(menu_choice)
+		end
+			puts "Goodbye!"
 	end
 
 	def get_option
 		options = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
-		puts "\nChoose an option (1-7): "
-		choice = gets.chomp
+		print "\nChoose an option (1-8): "
+		input = gets.chomp
 
-		until options.any?(choice) 
-			puts "please choose a number, 1-8 from the list of options stated above:"
-			choice = gets.chomp
+		until options.any?(input) 
+			print "please choose a number, 1-8 from the list of options stated above: "
+			input = gets.chomp
 		end
-		choice
+		input 
 	end
 
 	def choice(input)
@@ -64,16 +67,13 @@ class Library
 		when "3"
 			self.find_book
 		when "4"
-			#add new book 
+			self.add_new_book
 		when "5"
 			#update a book
 		when "6"
 			#delete a book
 		when "7"
 			self.save_csv
-		when "8"
-			puts "Goodbye!"
-			exit(0)
 		end
 	end
 
@@ -103,6 +103,26 @@ class Library
 		end
 	end
 
+	def add_new_book
+		print "Enter title: "
+		title = gets.chomp
+		print "Enter author: "
+		author = gets.chomp
+
+		print "Enter status (unread/read/reading): "
+		status = gets.chomp.downcase
+
+		if status == "read"
+			print "how would you rate it out of 10?"
+			rating = gets.chomp
+		else 
+			rating = "n/a"
+		end
+
+		new_book = Book.new(title, author, status, rating)
+		library << new_book.add_new_book
+	end
+
 	def save_csv
 		puts "Please enter a name for the new library: "
 		new_library = gets.chomp
@@ -115,20 +135,36 @@ class Library
 				end
 				puts "saved!"
 			end 
-		# rescue Exception => e 
-		# 	puts "Unable to save file, error: #{e}"
+		rescue Exception => e 
+			puts "Unable to save file, error: #{e}"
 		end
 	end
 
 	def display_book(book)
-		puts "\n#{book[:title]} by #{book[:author]} \nrating: #{book[:rating]} - #{book[:status]}"
+		puts "\n#{book[:title]} by #{book[:author]} \n#{book[:status]} - rating: #{book[:rating]}"
 	end
 
 end
 
 #next step: Create a Book Class, with CRUD - Create, Read, Update, Delete entries 
 
+class Book 
 
+	attr_accessor :title, :author, :status, :rating
+	
+	def initialize(title, author, status, rating)
+		@title = title 
+		@author = author
+		@status = status
+		@rating = rating
+		
+	end	
+
+	def add_new_book
+		 {title: @title, author: @author, status: @status, rating: @rating}
+	end
+
+end
 
 
 
