@@ -25,6 +25,7 @@ class Library
 	def initialize(file)
 		@library = []
 		read_csv(file)
+		puts @library
 	end
 
 	def read_csv(file)
@@ -35,18 +36,20 @@ class Library
 
 	def start_program
 		puts "Welcome to your Book Tracker 📖"
-		puts "\n1. View all books \n2. Filter by unread \n3. Find a book \n4. Add a new book \n5. Update a book \n6. Delete a book \n7. Export libary to csv"
+
+
+		puts "\n1. View all books \n2. Filter by unread \n3. Find a book \n4. Add a new book \n5. Update a book \n6. Delete a book \n7. Export libary to csv \n8. Exit program"
 		choice(get_option)
 	end
 
 	def get_option
-		options = ["1", "2", "3", "4", "5", "6", "7"]
+		options = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
 		puts "\nChoose an option (1-7): "
 		choice = gets.chomp
 
 		until options.any?(choice) 
-			puts "please choose a number, 1-7 from the list of options stated above:"
+			puts "please choose a number, 1-8 from the list of options stated above:"
 			choice = gets.chomp
 		end
 		choice
@@ -68,6 +71,9 @@ class Library
 			#delete a book
 		when "7"
 			self.save_csv
+		when "8"
+			puts "Goodbye!"
+			exit(0)
 		end
 	end
 
@@ -103,14 +109,14 @@ class Library
 
 		begin
 			CSV.open("#{new_library}.csv", "wb") do |csv|
-				csv << library.first.headers
+				csv << library.first.keys
 				library.each do |row|
-					csv << row
+					csv << row.values
 				end
 				puts "saved!"
 			end 
-		rescue Exception => e 
-			puts "Unable to save file, error: #{e}"
+		# rescue Exception => e 
+		# 	puts "Unable to save file, error: #{e}"
 		end
 	end
 
