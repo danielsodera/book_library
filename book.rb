@@ -70,7 +70,7 @@ class Library
 		when "4"
 			self.add_new_book
 		when "5"
-			#update a book
+			self.update_book
 		when "6"
 			self.delete_book
 		when "7"
@@ -93,8 +93,16 @@ class Library
 	end
 
 	def search_library
-		input = gets.chomp.downcase
-		library.find { |book| book[:title].downcase == input }
+		book = {}
+		
+		loop do
+			input = gets.chomp.downcase
+			book = library.find { |book| book[:title].downcase == input }
+			break if book 
+			puts "could not find book, please search for title again"
+		end
+		
+		book
 	end
 
 	def find_book 
@@ -132,6 +140,29 @@ class Library
 		rescue Exception => e
 			puts "Unable to add book to library, error: #{e}"
 		end
+	end
+
+	def update_book	
+		puts "What is the current title of the book you want to update?"
+		book = search_library
+
+		puts "What aspect would you like to change? (title, author, status, rating)"
+		input = gets.chomp.downcase.to_sym 
+
+		unless input == :title || input = :author || input == :status || input == :rating
+			puts "You can only change the title, author, status or rating"
+			puts "Please type in title, author, status or rating"
+			input = gets.chomp.downcase.to_sym 
+		end
+
+		puts "Current data is #{book[input]}"
+		print "Enter new #{input.to_s}: "
+
+		new_input = gets.chomp 
+
+		book[input] = new_input 
+
+		puts "Updated entry: #{book[input]}"
 	end
 
 	def delete_book
