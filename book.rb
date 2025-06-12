@@ -109,7 +109,7 @@ class Library
 
 		if status == "read"
 			print "how would you rate it out of 10?"
-			rating = "#{gets.chomp}/10"
+			rating = gets.chomp
 		else 
 			rating = "n/a"
 		end
@@ -130,7 +130,7 @@ class Library
 		puts "What aspect would you like to change? (title, author, status, rating)"
 		input = gets.chomp.downcase.to_sym 
 
-		unless input == :title || input = :author || input == :status || input == :rating
+		unless input == :title || input == :author || input == :status || input == :rating
 			puts "You can only change the title, author, status or rating"
 			puts "Please type in title, author, status or rating"
 			input = gets.chomp.downcase.to_sym 
@@ -187,7 +187,7 @@ class Book
 		
 	end	
 
-	def add_new_book
+	def book_to_hash
 		 {title: @title, author: @author, status: @status, rating: @rating}
 	end
 
