@@ -1,13 +1,14 @@
 #Interface goal 
 # Welcome to your Book Tracker 📖
 
-# 1. View all books
-# 2. Filter by status
-# 3. Find a book
-# 4. Add a new book
+# 1. View all books done
+# 2. Filter by status done
+# 3. Find a book done
+# 4. Add a new book done
 # 5. Update a book
 # 6. Delete a book
-# 7. Exit
+# 7. Export library to csv
+# 8. Exit done
 
 # Choose an option: 2
 
@@ -71,7 +72,7 @@ class Library
 		when "5"
 			#update a book
 		when "6"
-			#delete a book
+			self.delete_book
 		when "7"
 			self.save_csv
 		end
@@ -91,10 +92,14 @@ class Library
 		end
 	end
 
+	def search_library
+		input = gets.chomp.downcase
+		library.find { |book| book[:title].downcase == input }
+	end
+
 	def find_book 
 		puts "Enter book title..."
-		input = gets.chomp.downcase
-		book = library.find { |book| book[:title].downcase == input }
+		book = search_library
 
 		if book 
 			display_book(book)
@@ -127,6 +132,12 @@ class Library
 		rescue Exception => e
 			puts "Unable to add book to library, error: #{e}"
 		end
+	end
+
+	def delete_book
+		puts "What is the title of the book you want to delete?"
+		book = search_library
+		library.delete(book) 		
 	end
 
 	def save_csv
