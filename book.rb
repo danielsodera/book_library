@@ -1,22 +1,4 @@
-#Interface goal 
-# Welcome to your Book Tracker 📖
-
-# 1. View all books done
-# 2. Filter by status done
-# 3. Find a book done
-# 4. Add a new book done
-# 5. Update a book
-# 6. Delete a book
-# 7. Export library to csv
-# 8. Exit done
-
-# Choose an option: 2
-
-# Enter title: The Hobbit
-# Enter author: J.R.R. Tolkien
-# Enter status (read / reading / to-read): to-read
-
-# Book added successfully!
+#Book library - allows user to extract a csv of books, search through it, add/update/delete an entry, and extract the library to a new/exisiting csv. 
 
 require 'csv'
 
@@ -38,6 +20,8 @@ class Library
 		puts "Welcome to your Book Tracker 📖"
 
 		loop do 
+			puts "-"*20
+			puts "Main Menu"
 			puts "\n1. View all books \n2. Filter by unread \n3. Find a book \n4. Add a new book \n5. Update a book \n6. Delete a book \n7. Export libary to csv \n8. Exit program"
 			menu_choice = get_option
 		break if menu_choice == "8"	
@@ -108,15 +92,12 @@ class Library
 	def find_book 
 		puts "Enter book title..."
 		book = search_library
-
-		if book 
-			display_book(book)
-		else 
-			puts "Book not found"
-		end
+		display_book(book)
 	end
 
 	def add_new_book
+		#method is large, could break this down into smaller methods and keep the begin-rescue clause in this one. 
+		#could also add more checks for user input here 
 		print "Enter title: "
 		title = gets.chomp
 
@@ -128,7 +109,7 @@ class Library
 
 		if status == "read"
 			print "how would you rate it out of 10?"
-			rating = gets.chomp
+			rating = "#{gets.chomp}/10"
 		else 
 			rating = "n/a"
 		end
@@ -136,7 +117,7 @@ class Library
 		begin
 			new_book = Book.new(title, author, status, rating)
 			library << new_book.add_new_book
-			puts "Added book!"
+			puts "\nAdded book!"
 		rescue Exception => e
 			puts "Unable to add book to library, error: #{e}"
 		end
