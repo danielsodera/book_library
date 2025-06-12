@@ -175,8 +175,6 @@ class Library
 
 end
 
-#next step: Create a Book Class, with CRUD - Create, Read, Update, Delete entries 
-
 class Book 
 
 	attr_accessor :title, :author, :status, :rating
@@ -195,13 +193,7 @@ class Book
 
 end
 
-
-
-
-
 test = Library.new("library.csv")
 test.start_program
-
-#test.save_csv
 
 
