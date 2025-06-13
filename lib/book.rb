@@ -193,7 +193,5 @@ class Book
 
 end
 
-test = Library.new("library.csv")
-test.start_program
 
 
