@@ -56,7 +56,9 @@ class Library
 		when "5"
 			self.update_book
 		when "6"
-			self.delete_book
+			puts "What is the title of the book you want to delete?"
+			book = search_library
+			self.delete_book(book)
 		when "7"
 			self.save_csv
 		end
@@ -64,14 +66,14 @@ class Library
 
 	def view_books 
 		library.each do |book|
-			display_book(book)
+			puts display_book(book)
 		end
 	end
 
 	def show_unread
 		library.each do |book|
 			if book[:status] == "unread"
-				display_book(book)
+				puts display_book(book)
 			end 
 		end
 	end
@@ -92,7 +94,7 @@ class Library
 	def find_book 
 		puts "Enter book title..."
 		book = search_library
-		display_book(book)
+		puts display_book(book)
 	end
 
 	def add_new_book
@@ -115,7 +117,7 @@ class Library
 		end
 
 		begin
-			new_book = Book.new(title, author, status, rating)
+			new_book = Book.new(title: title, author: author, status: status, rating: rating)
 			library << new_book.add_new_book
 			puts "\nAdded book!"
 		rescue Exception => e
@@ -146,9 +148,7 @@ class Library
 		puts "Updated entry: #{book[input]}"
 	end
 
-	def delete_book
-		puts "What is the title of the book you want to delete?"
-		book = search_library
+	def delete_book(book)
 		library.delete(book) 		
 	end
 
@@ -170,7 +170,7 @@ class Library
 	end
 
 	def display_book(book)
-		puts "\n#{book[:title]} by #{book[:author]} \n#{book[:status]} - rating: #{book[:rating]}"
+			"\n#{book[:title]} by #{book[:author]} \n#{book[:status]} - rating: #{book[:rating]}"
 	end
 
 end
@@ -179,7 +179,7 @@ class Book
 
 	attr_accessor :title, :author, :status, :rating
 	
-	def initialize(title, author, status, rating)
+	def initialize(title:, author:, status:, rating:)
 		@title = title 
 		@author = author
 		@status = status
@@ -193,5 +193,7 @@ class Book
 
 end
 
+# test = Library.new("lib/library.csv")
+# test.start_program
 
 
