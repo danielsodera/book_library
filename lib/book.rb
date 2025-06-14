@@ -60,7 +60,9 @@ class Library
 			book = search_library
 			self.delete_book(book)
 		when "7"
-			self.save_csv
+			puts "Please enter a name for the new library:"
+			new_library = gets.chomp
+			self.save_csv(new_library)
 		end
 	end
 
@@ -152,10 +154,7 @@ class Library
 		library.delete(book) 		
 	end
 
-	def save_csv
-		puts "Please enter a name for the new library: "
-		new_library = gets.chomp
-
+	def save_csv(new_library)
 		begin
 			CSV.open("#{new_library}.csv", "wb") do |csv|
 				csv << library.first.keys

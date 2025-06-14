@@ -12,6 +12,14 @@ describe Library do
   end
 
   describe '#search_library' do
+      #yet to test
+  end
+
+  describe '#add_new_book' do
+  end
+
+  describe '#update_book' do 
+    
   end
 
   describe '#display_book' do
@@ -24,6 +32,18 @@ describe Library do
     it "removes book from library hash" do 
       subject.delete_book(book)
       expect(subject.library).to be_empty
+    end
+  end
+
+  describe '#save_csv' do 
+    it "saves a csv file in the same directory" do 
+      new_library = "test_new_csv_file"
+      file_path = "./#{new_library}.csv"
+      subject.save_csv(new_library)
+
+      expect(File.exist?(file_path)).to be true
+
+      File.delete(file_path) if File.exist?(file_path)
     end
   end
 
